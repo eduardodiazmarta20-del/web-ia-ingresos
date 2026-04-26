@@ -1,0 +1,108 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import AdSlot from '../components/AdSlot.astro';
+import Newsletter from '../components/Newsletter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  category?: string;
+  author?: string;
+  keywords?: string[];
+  image?: string;
+  breadcrumb?: { name: string; href: string }[];
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  category,
+  author = 'Equipo IAparaGanar',
+  keywords,
+  image,
+  breadcrumb = [],
+} = Astro.props;
+
+const fmt = (d: Date) => new Intl.DateTimeFormat('es-ES', { dateStyle: 'long' }).format(d);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  author: { '@type': 'Organization', name: author },
+  publisher: {
+    '@type': 'Organization',
+    name: 'IAparaGanar',
+    logo: { '@type': 'ImageObject', url: 'https://iaparaganar.com/favicon.svg' },
+  },
+  mainEntityOfPage: Astro.url.toString(),
+  inLanguage: 'es-ES',
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  publishedTime={pubDate.toISOString()}
+  modifiedTime={(updatedDate ?? pubDate).toISOString()}
+  keywords={keywords}
+  image={image}
+  jsonLd={jsonLd}
+>
+  <article class="container-prose py-10">
+    {breadcrumb.length > 0 && (
+      <nav aria-label="Migas" class="mb-4 text-sm text-slate-500">
+        <ol class="flex flex-wrap gap-1">
+          <li><a href="/" class="hover:text-brand-700">Inicio</a> <span>/</span></li>
+          {breadcrumb.map((b, i) => (
+            <li>
+              {i < breadcrumb.length - 1 ? (
+                <><a href={b.href} class="hover:text-brand-700">{b.name}</a> <span>/</span></>
+              ) : (
+                <span class="text-slate-700">{b.name}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+
+    {category && <span class="tag">{category}</span>}
+    <h1 class="mt-3 text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">{title}</h1>
+    <p class="mt-3 text-lg text-slate-600">{description}</p>
+    <div class="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-500">
+      <span>Por <strong class="text-slate-700">{author}</strong></span>
+      <span>•</span>
+      <time datetime={pubDate.toISOString()}>Publicado {fmt(pubDate)}</time>
+      {updatedDate && (<><span>•</span><time datetime={updatedDate.toISOString()}>Actualizado {fmt(updatedDate)}</time></>)}
+    </div>
+
+    <AdSlot slot="1111111111" layout="display" />
+
+    <div class="prose prose-slate mt-8 max-w-none prose-headings:font-bold prose-a:text-brand-700">
+      <slot />
+    </div>
+
+    <AdSlot slot="2222222222" layout="in-article" />
+
+    <Newsletter />
+
+    <section class="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+      <h3 class="text-lg font-bold text-slate-900">¿Te ha resultado útil?</h3>
+      <p class="mt-1 text-slate-600">Comparte este artículo y ayúdanos a llegar a más personas que quieren ganar dinero con IA.</p>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <a class="btn-secondary" target="_blank" rel="noopener" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(Astro.url.toString())}`}>Compartir en X</a>
+        <a class="btn-secondary" target="_blank" rel="noopener" href={`https://www.linkedin.com/shareArticle?mini=true&title=${encodeURIComponent(title)}&url=${encodeURIComponent(Astro.url.toString())}`}>LinkedIn</a>
+        <a class="btn-secondary" target="_blank" rel="noopener" href={`https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' ' + Astro.url.toString())}`}>WhatsApp</a>
+      </div>
+    </section>
+  </article>
+</BaseLayout>

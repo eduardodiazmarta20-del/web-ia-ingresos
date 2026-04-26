@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const items = (await getCollection('reviews')).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+
+const title = 'Reviews de herramientas IA 2026 | IAparaGanar';
+const description = 'Análisis en profundidad de las herramientas de IA más importantes de 2026. Precios, pros, contras y recomendaciones reales.';
+---
+
+<BaseLayout title={title} description={description} keywords={["reviews ia", "analisis herramientas ia", "opiniones ia"]}>
+  <section class="container-wide py-12">
+    <h1 class="text-4xl font-extrabold text-slate-900">Reviews de herramientas IA</h1>
+    <p class="mt-3 max-w-2xl text-slate-600">Análisis honestos, con pros, contras y puntuación clara.</p>
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {items.map((a) => (
+        <ArticleCard
+          href={`/reviews/${a.slug}`}
+          title={a.data.title}
+          description={a.data.description}
+          category={`${a.data.tool} · ★${a.data.rating}/10`}
+          date={a.data.pubDate}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

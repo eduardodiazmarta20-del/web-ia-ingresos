@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Aviso legal | IAparaGanar';
+const description = 'Aviso legal de IAparaGanar: titularidad del sitio, condiciones de uso, propiedad intelectual y responsabilidad.';
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="container-prose py-12">
+    <h1 class="text-3xl font-extrabold text-slate-900">Aviso legal</h1>
+    <p class="mt-2 text-sm text-slate-500">Última actualización: 15 de abril de 2026</p>
+
+    <div class="prose prose-slate mt-6 max-w-none">
+      <h2>Titularidad</h2>
+      <p>El presente sitio web, https://iaparaganar.com, es operado por IAparaGanar. Para cualquier consulta: contacto@iaparaganar.com</p>
+
+      <h2>Objeto</h2>
+      <p>El sitio tiene como finalidad informar sobre herramientas y métodos de inteligencia artificial para generar ingresos online. El contenido es orientativo y no constituye asesoramiento profesional, financiero ni legal.</p>
+
+      <h2>Condiciones de uso</h2>
+      <p>El usuario se compromete a hacer un uso lícito del sitio y a no utilizarlo con fines fraudulentos. Queda prohibida la reproducción total o parcial del contenido sin autorización expresa.</p>
+
+      <h2>Enlaces de afiliación</h2>
+      <p>Algunos enlaces del sitio son de afiliación: si realizas una compra a través de ellos recibimos una comisión sin coste adicional para ti. Esto no influye en nuestro criterio editorial.</p>
+
+      <h2>Propiedad intelectual</h2>
+      <p>Todos los contenidos publicados (textos, imágenes, logotipos, código) están protegidos por derechos de autor. Se permite compartir enlaces y citas breves con atribución.</p>
+
+      <h2>Responsabilidad</h2>
+      <p>IAparaGanar no se hace responsable del mal uso que el usuario haga de la información. La rentabilidad de cualquier método depende de múltiples factores externos al sitio.</p>
+
+      <h2>Legislación aplicable</h2>
+      <p>Esta web se rige por la legislación española. Para cualquier controversia, las partes se someten a los juzgados y tribunales del domicilio del usuario cuando proceda por ley.</p>
+    </div>
+  </section>
+</BaseLayout>

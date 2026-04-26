@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import AffiliateCard from '../../components/AffiliateCard.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import { getCollection } from 'astro:content';
+
+const articulos = (await getCollection('articulos'))
+  .filter((a) => ['Freelancers', 'Guías', 'Creadores de contenido'].includes(a.data.category))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const title = 'IA para freelancers en 2026 | IAparaGanar';
+const description = 'Las IAs imprescindibles para freelancers: entrega más en menos tiempo, cobra más por proyecto y diferénciate de la competencia.';
+---
+
+<BaseLayout title={title} description={description} keywords={["ia para freelancers", "freelance con ia", "herramientas freelance"]}>
+  <section class="container-wide py-12">
+    <span class="tag">Categoría</span>
+    <h1 class="mt-3 text-4xl font-extrabold text-slate-900">IA para freelancers</h1>
+    <p class="mt-3 max-w-2xl text-slate-600">Si facturas por tu tiempo, la IA multiplica lo que puedes cobrar sin trabajar más horas.</p>
+
+    <AdSlot slot="9999999999" />
+
+    <h2 class="mt-12 text-2xl font-bold text-slate-900">Stack recomendado</h2>
+    <div class="mt-6 space-y-5">
+      <AffiliateCard name="ChatGPT Plus" description="Tu asistente base para briefings, propuestas y entregas más rápidas." price="20 $/mes" rating={9.4} bestFor="Cualquier freelance" url="https://chat.openai.com/" badge="Esencial" />
+      <AffiliateCard name="Cursor" description="Editor de código con IA. Duplica la velocidad de cualquier dev freelance." price="Desde 20 $/mes" rating={9.3} bestFor="Developers" url="https://cursor.sh/" />
+      <AffiliateCard name="Notion IA" description="Propuestas, contratos y base de conocimiento por cliente." price="Desde 10 $/mes" rating={8.8} bestFor="Gestión de proyectos" url="https://www.notion.so/" />
+    </div>
+
+    <h2 class="mt-12 text-2xl font-bold text-slate-900">Artículos relacionados</h2>
+    <div class="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {articulos.map((a) => (
+        <ArticleCard href={`/articulos/${a.slug}`} title={a.data.title} description={a.data.description} category={a.data.category} date={a.data.pubDate} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

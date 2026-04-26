@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = '404 - Página no encontrada | IAparaGanar';
+const description = 'La página que buscas no existe. Te llevamos de vuelta al contenido que sí puede ayudarte a ganar dinero con IA.';
+---
+
+<BaseLayout title={title} description={description} noindex={true}>
+  <section class="container-prose flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">
+    <p class="text-7xl font-extrabold text-brand-700">404</p>
+    <h1 class="mt-4 text-3xl font-bold text-slate-900">Esta página no existe</h1>
+    <p class="mt-3 max-w-md text-slate-600">Pero no te preocupes. Te dejamos los mejores puntos de partida.</p>
+    <div class="mt-6 flex flex-wrap justify-center gap-3">
+      <a href="/" class="btn-primary">Ir al inicio</a>
+      <a href="/mejores-ia-ganar-dinero-2026" class="btn-secondary">Ver las 10 mejores IAs de 2026</a>
+    </div>
+  </section>
+</BaseLayout>

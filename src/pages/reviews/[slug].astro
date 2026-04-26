@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('reviews');
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const { title, description, pubDate, tool, rating, price, affiliateUrl, pros, cons, keywords } = post.data;
+
+const fmt = (d: Date) => new Intl.DateTimeFormat('es-ES', { dateStyle: 'long' }).format(d);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Review',
+  itemReviewed: { '@type': 'SoftwareApplication', name: tool, applicationCategory: 'BusinessApplication' },
+  reviewRating: { '@type': 'Rating', ratingValue: rating, bestRating: 10 },
+  author: { '@type': 'Organization', name: 'IAparaGanar' },
+  datePublished: pubDate.toISOString(),
+  description,
+  name: title,
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  publishedTime={pubDate.toISOString()}
+  keywords={keywords}
+  jsonLd={jsonLd}
+>
+  <article class="container-prose py-10">
+    <nav aria-label="Migas" class="mb-4 text-sm text-slate-500">
+      <ol class="flex flex-wrap gap-1">
+        <li><a href="/" class="hover:text-brand-700">Inicio</a> <span>/</span></li>
+        <li><a href="/reviews" class="hover:text-brand-700">Reviews</a> <span>/</span></li>
+        <li class="text-slate-700">{tool}</li>
+      </ol>
+    </nav>
+
+    <span class="tag">Review · {tool}</span>
+    <h1 class="mt-3 text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">{title}</h1>
+    <p class="mt-3 text-lg text-slate-600">{description}</p>
+
+    <div class="mt-6 grid gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-5 md:grid-cols-3">
+      <div>
+        <p class="text-xs uppercase tracking-wide text-slate-500">Puntuación</p>
+        <p class="mt-1 text-3xl font-extrabold text-slate-900">★ {rating}<span class="text-lg text-slate-500">/10</span></p>
+      </div>
+      <div>
+        <p class="text-xs uppercase tracking-wide text-slate-500">Precio</p>
+        <p class="mt-1 text-lg font-semibold text-slate-900">{price}</p>
+      </div>
+      <div class="flex items-end">
+        {affiliateUrl && (
+          <a href={affiliateUrl} target="_blank" rel="sponsored noopener nofollow" class="btn-affiliate w-full">Probar {tool} →</a>
+        )}
+      </div>
+    </div>
+
+    <AdSlot slot="7777777777" />
+
+    <div class="prose prose-slate mt-8 max-w-none">
+      <Content />
+
+      {pros.length > 0 && (
+        <>
+          <h2>Pros</h2>
+          <ul>{pros.map((p: string) => <li>{p}</li>)}</ul>
+        </>
+      )}
+      {cons.length > 0 && (
+        <>
+          <h2>Contras</h2>
+          <ul>{cons.map((c: string) => <li>{c}</li>)}</ul>
+        </>
+      )}
+    </div>
+
+    <div class="mt-8 rounded-2xl border border-slate-200 bg-gradient-to-br from-brand-50 to-white p-6">
+      <h3 class="text-xl font-bold text-slate-900">¿Conclusión?</h3>
+      <p class="mt-2 text-slate-700">Si {tool} encaja con tu flujo, es una de las herramientas más rentables del mercado.</p>
+      {affiliateUrl && <a href={affiliateUrl} target="_blank" rel="sponsored noopener nofollow" class="btn-affiliate mt-4">Probar {tool} →</a>}
+    </div>
+
+    <Newsletter />
+  </article>
+</BaseLayout>

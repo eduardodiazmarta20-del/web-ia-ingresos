@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Política de cookies | IAparaGanar';
+const description = 'Qué son las cookies, para qué las usamos en IAparaGanar y cómo puedes gestionarlas o desactivarlas.';
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="container-prose py-12">
+    <h1 class="text-3xl font-extrabold text-slate-900">Política de cookies</h1>
+    <p class="mt-2 text-sm text-slate-500">Última actualización: 15 de abril de 2026</p>
+
+    <div class="prose prose-slate mt-6 max-w-none">
+      <h2>¿Qué son las cookies?</h2>
+      <p>Las cookies son pequeños ficheros que una web guarda en tu navegador para recordar información de tu visita.</p>
+
+      <h2>Tipos de cookies que utilizamos</h2>
+      <ul>
+        <li><strong>Técnicas:</strong> imprescindibles para el funcionamiento del sitio.</li>
+        <li><strong>Analíticas:</strong> Google Analytics 4 (datos anonimizados).</li>
+        <li><strong>Publicitarias:</strong> Google AdSense para mostrarte anuncios más relevantes.</li>
+        <li><strong>Afiliación:</strong> cookies de programas de afiliados para atribuir compras.</li>
+      </ul>
+
+      <h2>Cómo gestionar las cookies</h2>
+      <p>Puedes aceptar, rechazar o configurar cookies desde el banner que aparece al entrar en el sitio. También puedes borrarlas desde la configuración de tu navegador:</p>
+      <ul>
+        <li>Chrome → Ajustes → Privacidad y seguridad → Cookies.</li>
+        <li>Firefox → Preferencias → Privacidad.</li>
+        <li>Safari → Preferencias → Privacidad.</li>
+      </ul>
+
+      <h2>Consecuencia de rechazar cookies</h2>
+      <p>Rechazar cookies no te impide navegar por el sitio, pero algunas funciones pueden verse reducidas y la publicidad será menos relevante.</p>
+
+      <h2>Cambios</h2>
+      <p>Podemos actualizar esta política de cookies. Te recomendamos revisarla periódicamente.</p>
+    </div>
+  </section>
+</BaseLayout>

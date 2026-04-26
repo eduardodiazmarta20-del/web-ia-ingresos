@@ -1,0 +1,23 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  category?: string;
+  date?: Date;
+}
+const { href, title, description, category, date } = Astro.props;
+const formatted = date ? new Intl.DateTimeFormat('es-ES', { dateStyle: 'long' }).format(date) : '';
+---
+
+<article class="card h-full">
+  {category && <span class="tag">{category}</span>}
+  <h3 class="mt-3 text-xl font-bold text-slate-900">
+    <a href={href} class="hover:text-brand-700">{title}</a>
+  </h3>
+  <p class="mt-2 text-slate-600">{description}</p>
+  <div class="mt-4 flex items-center justify-between text-sm">
+    {formatted && <time class="text-slate-500">{formatted}</time>}
+    <a href={href} class="font-semibold text-brand-700 hover:underline">Leer →</a>
+  </div>
+</article>

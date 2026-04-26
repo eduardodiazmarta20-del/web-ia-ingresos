@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const items = (await getCollection('comparativas')).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+
+const title = 'Comparativas de IA 2026 | IAparaGanar';
+const description = 'Comparativas honestas entre las mejores herramientas de inteligencia artificial de 2026. Elige la adecuada para tu negocio.';
+---
+
+<BaseLayout title={title} description={description} keywords={["comparativa ia", "ia vs", "mejor herramienta ia"]}>
+  <section class="container-wide py-12">
+    <h1 class="text-4xl font-extrabold text-slate-900">Comparativas de IA</h1>
+    <p class="mt-3 max-w-2xl text-slate-600">Enfrentamos las herramientas líderes para que sepas exactamente cuál contratar.</p>
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {items.map((a) => (
+        <ArticleCard
+          href={`/comparativas/${a.slug}`}
+          title={a.data.title}
+          description={a.data.description}
+          category={`${a.data.toolA} vs ${a.data.toolB}`}
+          date={a.data.pubDate}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

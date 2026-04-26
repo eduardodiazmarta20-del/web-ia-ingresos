@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  slugs?: string[];
+  category?: string;
+  currentSlug?: string;
+  type?: 'articulos' | 'comparativas' | 'reviews';
+  limit?: number;
+}
+
+const { slugs = [], category, currentSlug, type = 'articulos', limit = 3 } = Astro.props;
+
+const all = await getCollection(type as any);
+let items = [] as any[];
+
+if (slugs.length > 0) {
+  items = slugs
+    .map((s) => all.find((e: any) => e.slug === s))
+    .filter(Boolean);
+}
+
+if (items.length < limit && category) {
+  const rest = all
+    .filter((e: any) => e.slug !== currentSlug && e.data.category === category && !items.includes(e))
+    .sort((a: any, b: any) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+    .slice(0, limit - items.length);
+  items = [...items, ...rest];
+}
+
+if (items.length < limit) {
+  const rest = all
+    .filter((e: any) => e.slug !== currentSlug && !items.includes(e))
+    .sort((a: any, b: any) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+    .slice(0, limit - items.length);
+  items = [...items, ...rest];
+}
+
+items = items.slice(0, limit);
+
+const base = type === 'articulos' ? '/articulos' : type === 'comparativas' ? '/comparativas' : '/reviews';
+const heading = type === 'reviews' ? 'Otras reviews que te interesan' : type === 'comparativas' ? 'Más comparativas' : 'Sigue leyendo';
+---
+
+{items.length > 0 && (
+  <section class="not-prose my-12" aria-label={heading}>
+    <h2 class="text-2xl font-extrabold text-slate-900 md:text-3xl">{heading}</h2>
+    <div class="mt-6 grid gap-5 md:grid-cols-3">
+      {items.map((p: any) => (
+        <a href={`${base}/${p.slug}`} class="card block h-full hover:border-brand-300">
+          <span class="tag">{p.data.category ?? p.data.tool ?? (p.data.toolA && `${p.data.toolA} vs ${p.data.toolB}`)}</span>
+          <h3 class="mt-3 text-lg font-bold leading-snug text-slate-900">{p.data.title}</h3>
+          <p class="mt-2 text-sm text-slate-600">{p.data.description}</p>
+          <span class="mt-3 inline-block text-sm font-semibold text-brand-700">Leer →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+)}

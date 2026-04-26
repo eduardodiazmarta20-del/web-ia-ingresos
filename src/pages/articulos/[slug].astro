@@ -1,0 +1,29 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('articulos');
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<ArticleLayout
+  title={post.data.title}
+  description={post.data.description}
+  pubDate={post.data.pubDate}
+  updatedDate={post.data.updatedDate}
+  category={post.data.category}
+  author={post.data.author}
+  keywords={post.data.keywords}
+  image={post.data.image}
+  breadcrumb={[
+    { name: 'Artículos', href: '/articulos' },
+    { name: post.data.title, href: `/articulos/${post.slug}` },
+  ]}
+>
+  <Content />
+</ArticleLayout>

@@ -1,0 +1,34 @@
+---
+interface Row {
+  feature: string;
+  a: string;
+  b: string;
+}
+interface Props {
+  toolA: string;
+  toolB: string;
+  rows: Row[];
+}
+const { toolA, toolB, rows } = Astro.props;
+---
+
+<div class="not-prose my-8 overflow-x-auto rounded-2xl border border-slate-200">
+  <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
+    <thead class="bg-slate-50">
+      <tr>
+        <th class="px-4 py-3 font-semibold text-slate-700">Característica</th>
+        <th class="px-4 py-3 font-semibold text-brand-700">{toolA}</th>
+        <th class="px-4 py-3 font-semibold text-brand-700">{toolB}</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-100 bg-white">
+      {rows.map((r) => (
+        <tr>
+          <td class="px-4 py-3 font-medium text-slate-800">{r.feature}</td>
+          <td class="px-4 py-3 text-slate-700">{r.a}</td>
+          <td class="px-4 py-3 text-slate-700">{r.b}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

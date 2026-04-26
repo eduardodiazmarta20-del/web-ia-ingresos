@@ -1,0 +1,26 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('comparativas');
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<ArticleLayout
+  title={post.data.title}
+  description={post.data.description}
+  pubDate={post.data.pubDate}
+  category={`${post.data.toolA} vs ${post.data.toolB}`}
+  keywords={post.data.keywords}
+  breadcrumb={[
+    { name: 'Comparativas', href: '/comparativas' },
+    { name: post.data.title, href: `/comparativas/${post.slug}` },
+  ]}
+>
+  <Content />
+</ArticleLayout>

@@ -1,0 +1,187 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AdSlot from '../components/AdSlot.astro';
+import AffiliateCard from '../components/AffiliateCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { getCollection } from 'astro:content';
+
+const articulos = (await getCollection('articulos')).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const featured = articulos.filter((a) => a.data.featured).slice(0, 3);
+const ultimos = articulos.slice(0, 6);
+
+const title = 'IAparaGanar | IA para ganar dinero online en español (2026)';
+const description = 'Las mejores IA para ganar dinero online en 2026. Herramientas, comparativas, reviews y guías en español para monetizar la inteligencia artificial.';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'IAparaGanar',
+    url: 'https://iaparaganar.com',
+    inLanguage: 'es-ES',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://iaparaganar.com/articulos?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'IAparaGanar',
+    url: 'https://iaparaganar.com',
+    logo: 'https://iaparaganar.com/favicon.svg',
+    sameAs: [],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} keywords={["ia para ganar dinero", "mejores ia 2026", "ganar dinero con inteligencia artificial", "herramientas ia españa"]} jsonLd={jsonLd}>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-950 text-white">
+    <div class="container-wide grid gap-10 py-16 md:grid-cols-2 md:py-24">
+      <div>
+        <span class="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide">Actualizado · Abril 2026</span>
+        <h1 class="mt-4 text-4xl font-extrabold leading-tight md:text-5xl">
+          IA para <span class="text-accent-400">ganar dinero online</span> en español
+        </h1>
+        <p class="mt-4 max-w-xl text-lg text-brand-100">
+          Herramientas probadas, estrategias reales y comparativas honestas. Todo lo que necesitas para monetizar la inteligencia artificial en 2026.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/mejores-ia-ganar-dinero-2026" class="btn-affiliate">Ver las 10 mejores IA de 2026 →</a>
+          <a href="/articulos" class="btn-secondary bg-white/10 text-white hover:bg-white/20 border-white/20">Explorar guías</a>
+        </div>
+        <ul class="mt-6 grid grid-cols-2 gap-3 text-sm text-brand-100 sm:max-w-md">
+          <li class="flex items-center gap-2">✓ Guías en español</li>
+          <li class="flex items-center gap-2">✓ Métodos reales</li>
+          <li class="flex items-center gap-2">✓ Herramientas probadas</li>
+          <li class="flex items-center gap-2">✓ Sin humo, sin teoría</li>
+        </ul>
+      </div>
+
+      <div class="flex items-center justify-center">
+        <div class="w-full max-w-md rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 backdrop-blur">
+          <h2 class="text-lg font-bold">3 métodos para ganar dinero con IA esta semana</h2>
+          <ol class="mt-4 space-y-3 text-brand-100">
+            <li><strong class="text-white">1.</strong> Automatiza entregas freelance con ChatGPT y cobra por resultado.</li>
+            <li><strong class="text-white">2.</strong> Crea un blog SEO con IA y monetízalo con AdSense + afiliados.</li>
+            <li><strong class="text-white">3.</strong> Vende arte con Midjourney en Etsy o Redbubble.</li>
+          </ol>
+          <a href="/articulos/como-ganar-dinero-con-inteligencia-artificial" class="mt-5 inline-block font-semibold text-accent-400 hover:underline">Leer la guía completa →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS -->
+  <section class="container-wide py-14">
+    <h2 class="text-3xl font-extrabold text-slate-900">Elige tu perfil</h2>
+    <p class="mt-2 text-slate-600">Tres caminos probados para monetizar la IA según cómo trabajas.</p>
+    <div class="mt-8 grid gap-6 md:grid-cols-3">
+      <a href="/categoria/creadores-de-contenido" class="card hover:border-brand-300">
+        <span class="tag">Creadores</span>
+        <h3 class="mt-3 text-xl font-bold text-slate-900">IA para creadores de contenido</h3>
+        <p class="mt-2 text-slate-600">Produce blog, vídeo y redes x3 más rápido sin perder calidad.</p>
+        <span class="mt-4 inline-block font-semibold text-brand-700">Ver herramientas →</span>
+      </a>
+      <a href="/categoria/freelancers" class="card hover:border-brand-300">
+        <span class="tag">Freelancers</span>
+        <h3 class="mt-3 text-xl font-bold text-slate-900">IA para freelancers</h3>
+        <p class="mt-2 text-slate-600">Entrega más en menos tiempo. Sube tarifas sin perder clientes.</p>
+        <span class="mt-4 inline-block font-semibold text-brand-700">Ver estrategias →</span>
+      </a>
+      <a href="/categoria/emprendedores" class="card hover:border-brand-300">
+        <span class="tag">Emprendedores</span>
+        <h3 class="mt-3 text-xl font-bold text-slate-900">IA para emprendedores</h3>
+        <p class="mt-2 text-slate-600">Lanza un negocio en 30 días usando IA en todas las fases.</p>
+        <span class="mt-4 inline-block font-semibold text-brand-700">Ver plan de 30 días →</span>
+      </a>
+    </div>
+  </section>
+
+  <AdSlot slot="3333333333" />
+
+  <!-- DESTACADOS -->
+  <section class="container-wide py-10">
+    <div class="flex items-end justify-between">
+      <div>
+        <h2 class="text-3xl font-extrabold text-slate-900">Destacados</h2>
+        <p class="mt-2 text-slate-600">Lo mejor para empezar a monetizar la IA.</p>
+      </div>
+      <a href="/articulos" class="hidden text-sm font-semibold text-brand-700 hover:underline md:inline">Ver todos →</a>
+    </div>
+    <div class="mt-8 grid gap-6 md:grid-cols-3">
+      {featured.map((a) => (
+        <ArticleCard
+          href={`/articulos/${a.slug}`}
+          title={a.data.title}
+          description={a.data.description}
+          category={a.data.category}
+          date={a.data.pubDate}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- TOP HERRAMIENTAS -->
+  <section class="container-wide py-14">
+    <h2 class="text-3xl font-extrabold text-slate-900">Las IAs más rentables en 2026</h2>
+    <p class="mt-2 text-slate-600">Elegidas por su relación calidad-precio y por el ROI real que generan.</p>
+    <div class="mt-8 space-y-5">
+      <AffiliateCard
+        name="ChatGPT Plus"
+        description="La IA generalista más completa: texto, imagen, voz y GPTs personalizados."
+        price="20 $/mes"
+        rating={9.4}
+        bestFor="Cualquier profesional digital"
+        url="https://chat.openai.com/"
+        badge="Top 1"
+      />
+      <AffiliateCard
+        name="Claude Pro"
+        description="Escritura larga de altísima calidad en español. Ideal para blogs y ebooks."
+        price="20 $/mes"
+        rating={9.2}
+        bestFor="Creadores de contenido"
+        url="https://claude.ai/"
+      />
+      <AffiliateCard
+        name="Midjourney"
+        description="La IA de imágenes más estética del mercado. Perfecta para vender arte."
+        price="10 $/mes"
+        rating={9.2}
+        bestFor="Diseñadores y vendedores de arte IA"
+        url="https://www.midjourney.com/"
+      />
+      <AffiliateCard
+        name="Jasper"
+        description="Suite de copywriting con brand voice, flujos y SEO. Pensada para agencias."
+        price="49 $/mes"
+        rating={8.6}
+        bestFor="Agencias y marcas"
+        url="https://www.jasper.ai/"
+      />
+    </div>
+  </section>
+
+  <!-- ÚLTIMOS ARTÍCULOS -->
+  <section class="container-wide py-10">
+    <h2 class="text-3xl font-extrabold text-slate-900">Últimos artículos</h2>
+    <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {ultimos.map((a) => (
+        <ArticleCard
+          href={`/articulos/${a.slug}`}
+          title={a.data.title}
+          description={a.data.description}
+          category={a.data.category}
+          date={a.data.pubDate}
+        />
+      ))}
+    </div>
+  </section>
+
+  <Newsletter />
+</BaseLayout>

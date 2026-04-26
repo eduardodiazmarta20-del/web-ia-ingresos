@@ -1,0 +1,28 @@
+---
+interface Props {
+  slot?: string;
+  format?: string;
+  layout?: 'in-article' | 'display';
+  label?: string;
+}
+const { slot = '0000000000', format = 'auto', layout = 'display', label = 'Publicidad' } = Astro.props;
+const adClient = import.meta.env.PUBLIC_ADSENSE_CLIENT || 'ca-pub-0000000000000000';
+---
+
+<aside class="my-8 w-full" aria-label={label}>
+  <p class="mb-2 text-center text-[11px] uppercase tracking-wider text-slate-400">{label}</p>
+  <div class="flex min-h-[90px] items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 p-2">
+    <ins
+      class="adsbygoogle block w-full"
+      style="display:block"
+      data-ad-client={adClient}
+      data-ad-slot={slot}
+      data-ad-format={format}
+      data-full-width-responsive="true"
+      {...(layout === 'in-article' ? { 'data-ad-layout': 'in-article' } : {})}
+    ></ins>
+  </div>
+  <script is:inline>
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</aside>
